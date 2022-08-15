@@ -1,0 +1,26 @@
+<div
+  class="m-auto max-w-md min-h-full flex flex-col p-3 bg-base-200 rounded-2xl"
+  style="height: 600px"
+>
+  <div class="overflow-auto h-full">
+    <div *ngFor="let todoList of todoLists">
+      <app-todo-list
+        (dragover)="allowDrop($event)"
+        (drop)="handleDrop(todoList.id)"
+        (dragEvent)="dragDrop($event)"
+        [addTodoList]="addTodoList"
+        [deleteTodoList]="deleteTodoList"
+        [todoList]="todoList"
+      ></app-todo-list>
+    </div>
+  </div>
+  <input
+    id="todo-list-input"
+    type="text"
+    (input)="onKey($event)"
+    [value]="input"
+    (keyup.enter)="handleEnterPress($event)"
+    class="input input-bordered input-secondary w-full"
+    style="margin-top: auto"
+  />
+</div>

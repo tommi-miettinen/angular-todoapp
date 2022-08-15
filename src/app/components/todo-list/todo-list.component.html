@@ -1,0 +1,84 @@
+<div>
+  <div
+    id="todoList"
+    (click)="toggleOpen($event)"
+    class="px-4 py-2 my-1 bg-base-100 rounded-xl flex items-center hover:bg-neutral cursor-pointer"
+    [ngClass]="{ 'bg-green-300': todoList.completed }"
+  >
+    {{ todoList.title }}
+    <div class="dropdown dropdown-end ml-auto m-1">
+      <label tabindex="0" class="btn btn-ghost btn-xs">. . .</label>
+      <ul
+        tabindex="0"
+        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-10"
+      >
+        <li (click)="deleteTodoList(todoList.id)"><a>Delete</a></li>
+        <li (click)="copyTodoList()"><a>Duplicate</a></li>
+        <li (click)="copyTodoList()">
+          <a>Duplicate with state</a>
+        </li>
+      </ul>
+    </div>
+    <div class="ml-1 bg py-1 px-3 rounded-md bg-neutral">
+      {{ todoList.todos.length }}
+    </div>
+  </div>
+  <div class="w-11/12 ml-auto px-2" *ngIf="isOpen">
+    <div
+      class="rounded-lg p-2 ml-auto hover:bg-neutral cursor-pointer my-2 flex items-center"
+      draggable="true"
+      (dragstart)="handleDrag({ from: todoList.id, todoId: todo.id })"
+      *ngFor="let todo of todoList.todos"
+    >
+      <div>{{ todo.title }}</div>
+      <button
+        (click)="deleteTodo(todo.id)"
+        style="height: 20px; width: 20px"
+        class="ml-auto rounded"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          style="height: 20px; width: 20px"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    <input
+      *ngIf="addingTodo"
+      id="todo-input"
+      (keyup.enter)="createTodo($event, todoList.id)"
+      (input)="onKey($event)"
+      [value]="input"
+      type="text"
+      class="input input-secondary w-full h-10"
+    />
+    <button
+      (click)="setAddingTodo(true)"
+      class="p-2 w-full text-left hover:bg-neutral rounded-lg flex items-center"
+      *ngIf="!addingTodo"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="currentColor"
+        class="bi bi-plus"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+        />
+      </svg>
+      Add todo
+    </button>
+  </div>
+</div>

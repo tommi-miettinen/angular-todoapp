@@ -1,0 +1,4 @@
+<div class="justify-center h-screen flex flex-col bg-base-300">
+  <todo-lists *ngIf="loggedIn"></todo-lists>
+  <app-login-form *ngIf="!loggedIn"></app-login-form>
+</div>
