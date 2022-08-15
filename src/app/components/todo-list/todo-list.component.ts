@@ -37,6 +37,10 @@ export class TodoListComponent {
     this.addingTodo = bool;
   }
 
+  toggleCompleteTodoList() {
+    this.todoList.completed = !this.todoList.completed;
+  }
+
   copyTodoList() {
     this.addTodoList(this.todoList);
   }

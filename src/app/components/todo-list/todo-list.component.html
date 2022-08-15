@@ -2,15 +2,35 @@
   <div
     id="todoList"
     (click)="toggleOpen($event)"
-    class="px-4 py-2 my-1 bg-base-100 rounded-xl flex items-center hover:bg-neutral cursor-pointer"
-    [ngClass]="{ 'bg-green-300': todoList.completed }"
+    class="px-4 py-2 my-1 bg-base-100 rounded-xl flex items-center hover:bg-slate-800 cursor-pointer"
   >
-    {{ todoList.title }}
+    <input
+      (click)="toggleCompleteTodoList()"
+      type="checkbox"
+      [checked]="todoList.completed"
+      class="checkbox checkbox-secondary mr-3"
+    /><span>{{ todoList.title }}</span>
     <div class="dropdown dropdown-end ml-auto m-1">
-      <label tabindex="0" class="btn btn-ghost btn-xs">. . .</label>
+      <button
+        tabindex="0"
+        class="btn btn-ghost btn-sm btn-square hover:bg-slate-700 rounded-md"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-three-dots-vertical"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+          />
+        </svg>
+      </button>
       <ul
         tabindex="0"
-        class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 z-10"
+        class="dropdown-content menu p-1 shadow bg-base-300 mt-1 rounded-xl z-10 border w-52 border-slate-800"
       >
         <li (click)="deleteTodoList(todoList.id)"><a>Delete</a></li>
         <li (click)="copyTodoList()"><a>Duplicate</a></li>
@@ -19,17 +39,24 @@
         </li>
       </ul>
     </div>
-    <div class="ml-1 bg py-1 px-3 rounded-md bg-neutral">
+    <div
+      class="ml-1 btn-square btn-sm flex items-center justify-center font-semibold rounded-md bg-slate-800"
+    >
       {{ todoList.todos.length }}
     </div>
   </div>
   <div class="w-11/12 ml-auto px-2" *ngIf="isOpen">
     <div
-      class="rounded-lg p-2 ml-auto hover:bg-neutral cursor-pointer my-2 flex items-center"
+      class="rounded-lg p-3 ml-auto hover:bg-neutral cursor-pointer my-2 flex items-center"
       draggable="true"
       (dragstart)="handleDrag({ from: todoList.id, todoId: todo.id })"
       *ngFor="let todo of todoList.todos"
     >
+      <input
+        type="checkbox"
+        [checked]="todo.completed"
+        class="checkbox checkbox-secondary mr-3"
+      />
       <div>{{ todo.title }}</div>
       <button
         (click)="deleteTodo(todo.id)"
@@ -63,7 +90,7 @@
     />
     <button
       (click)="setAddingTodo(true)"
-      class="p-2 w-full text-left hover:bg-neutral rounded-lg flex items-center"
+      class="py-2 px-1 w-full text-left hover:bg-neutral rounded-lg flex items-center"
       *ngIf="!addingTodo"
     >
       <svg
